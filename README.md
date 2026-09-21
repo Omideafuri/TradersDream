@@ -314,6 +314,42 @@ To run the Phase 6 generalization and cross-asset pipeline:
 
 ---
 
+## Phase 7: Horizon Reassessment & Temporal Resolution Study
+
+### Master Empirical Classification: NOT_SUPPORTED (No Slower-Horizon Edge Exists)
+Phase 7 investigated whether Jev contains predictive information at a slower temporal resolution ($5\text{m}, 15\text{m}, 30\text{m}, 1\text{h}, 4\text{h}$) that is obscured or economically destroyed by 5-minute execution:
+
+- **Architecture Package**: `temporal/`
+  - `data_aggregator.py`: Strictly causal multi-timeframe OHLCV resampling from 5m base into 15m, 30m, 1h, and 4h.
+  - `targets.py`: Strictly causal forward return targets, absolute return, MFE, and MAE over explicit horizon bars.
+  - `methodology.py`: Formal separation of Primary Methodology ($\text{horizon} = \text{execution frequency}$) and Secondary Methodology (5m execution, multi-horizon forward hold).
+  - `signal_eval.py`: Directional accuracy, balanced accuracy, Brier score, ECE, Spearman rank correlations, and uncertainty relationship.
+  - `cost_model.py`: Frozen cost parameters (10 bps fee + 5 bps slippage per fill = 30 bps round-trip friction + 10 bps margin = 40 bps economic hurdle).
+  - `frequency_effect.py`: De-biasing engine distinguishing true signal improvements from turnover-reduction fee savings.
+  - `monotonicity.py`: Formal monotonicity testing of gross edge and accuracy across horizon durations ($5\text{m} \to 4\text{h}$).
+  - `power_audit.py`: Formal statistical power audit and hypothesis testing ($H_0: \mu \le 0$ vs $H_1: \mu = +40\text{ bps}$).
+  - `cross_regime.py`: Performance characterization across all 6 causal market regimes per horizon.
+  - `walk_forward.py`: Chronological 4-fold rolling walk-forward validation with printed exact boundaries.
+  - `baselines.py`: Evaluation of 7 model-agnostic reference benchmarks across all horizons.
+  - `registry.py`: Pre-registered hypotheses and Benjamini-Hochberg FDR adjustments.
+  - `report.py`: Comprehensive 23-section Markdown scientific audit report, JSON, and CSV generator.
+  - `run.py`: Multi-horizon pipeline CLI runner.
+
+### Key Empirical Findings
+1. **Directional Accuracy**: Out-of-sample directional accuracy remains between $45.8\%$ and $53.6\%$ across all horizons and assets (statistically indistinguishable from a random coin flip, $p > 0.30$ across all tests).
+2. **Gross Return vs Edge**: While uncosted return dispersion scales with $\sqrt{t}$ as expected under diffusion, net expectancy remains negative across all tested horizons after accounting for 30 bps round-trip friction.
+3. **Turnover De-biasing**: Performance improvement at 1h and 4h is driven primarily by reduced transaction frequency rather than genuine alpha generation (`FRICTION_REDUCTION_ONLY` / `MARGINAL_SIGNAL_IMPROVEMENT_INSUFFICIENT_FOR_FEES`).
+4. **Statistical Power Audit**: Clarified that with $N_{eff} \approx 200 - 1500$, the system has $\ge 95\%$ statistical power to detect an economic alpha of $+40\text{ bps}$. The observed negative returns cannot be attributed to a type II sample-size error.
+5. **Multiple Testing**: 0 of the pre-registered horizon hypotheses reject $H_0$ or survive Benjamini-Hochberg FDR ($q < 0.05$).
+6. **Safety Invariants Maintained**: `PAPER_TRADING_ONLY = true` and `USE_LIVE_JEV = false` remain strictly enforced. Zero real execution.
+
+To run the Phase 7 temporal resolution evaluation:
+```bash
+.venv\Scripts\python -m temporal.run --symbols BTCUSDT,ETHUSDT,SOLUSDT --horizons 5m,15m,30m,1h,4h
+```
+
+---
+
 ## Structured Logging Format
 
 Every decision cycle emits a structured log entry:
