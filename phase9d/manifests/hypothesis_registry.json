@@ -1,0 +1,132 @@
+{
+  "P9D-H01": {
+    "hypothesis_id": "P9D-H01",
+    "name": "Order-Book Depth Imbalance",
+    "statement": "Short-horizon bid/ask depth imbalance contains directional predictive information about subsequent returns after controlling for Phase 9C regime and volatility.",
+    "mathematical_definition": "Imbalance = (BidDepth - AskDepth) / (BidDepth + AskDepth); test Corr(Imbalance_t, Return_{t+h} | Regime_t)",
+    "dependent_variable": "target_ret_1 (5m forward log return)",
+    "independent_variables": [
+      "ob_imbalance_l1",
+      "ob_imbalance_l5",
+      "ob_imbalance_l10"
+    ],
+    "prediction_horizons": [
+      1,
+      3,
+      6
+    ],
+    "train_validation_policy": "Chronological Dev (60%) -> Validation (20%)",
+    "economic_hurdle_bps": 40.0,
+    "statistical_test": "Partial Spearman rank correlation & logistic regression controlling for realized_vol and regime",
+    "multiple_testing_correction": "Benjamini-Hochberg FDR at alpha = 0.05",
+    "rejection_criteria": "FDR q-value >= 0.05 or Spearman IC <= 0.02 or gross edge <= 0 bps",
+    "support_criteria": "FDR q-value < 0.05, Spearman IC > 0.03, and net edge > 0 bps after total dynamic friction",
+    "minimum_sample_requirement": 500,
+    "status": "REJECTED",
+    "registered_at": "2026-09-21T22:57:21.132969+00:00",
+    "evaluation_notes": "No significant rank correlation (IC=0.0000, p=1.000e+00)."
+  },
+  "P9D-H02": {
+    "hypothesis_id": "P9D-H02",
+    "name": "Spread State and Adverse Price Drift",
+    "statement": "Relative bid/ask spread predicts subsequent adverse price movement, volatility expansion, and execution cost deterioration.",
+    "mathematical_definition": "Spread_bps = (AskPrice - BidPrice) / MidPrice * 10000; test Corr(Spread_bps_t, Forward_Vol_{t+h})",
+    "dependent_variable": "target_vol_1 (5m forward volatility), target_abs_ret_1",
+    "independent_variables": [
+      "spread_bps",
+      "relative_spread"
+    ],
+    "prediction_horizons": [
+      1,
+      3,
+      6
+    ],
+    "train_validation_policy": "Chronological Dev (60%) -> Validation (20%)",
+    "economic_hurdle_bps": 40.0,
+    "statistical_test": "Spearman rank correlation and linear regression against forward volatility / execution penalty",
+    "multiple_testing_correction": "Benjamini-Hochberg FDR at alpha = 0.05",
+    "rejection_criteria": "FDR q-value >= 0.05 or Spearman IC <= 0.03",
+    "support_criteria": "FDR q-value < 0.05, Spearman IC > 0.05, predicting execution friction and dispersion",
+    "minimum_sample_requirement": 500,
+    "status": "REJECTED",
+    "registered_at": "2026-09-21T22:57:21.132969+00:00",
+    "evaluation_notes": "Spread state failed to predict forward volatility (IC=0.0000, p=1.000e+00)."
+  },
+  "P9D-H03": {
+    "hypothesis_id": "P9D-H03",
+    "name": "Trade-Flow Imbalance Persistence",
+    "statement": "Aggressor-side trade volume imbalance contains incremental directional information about subsequent returns beyond OHLCV volume proxies.",
+    "mathematical_definition": "TFI = (BuyVolume - SellVolume) / (BuyVolume + SellVolume); test Incremental IC(TFI_t, Return_{t+h}) beyond rel_volume_48",
+    "dependent_variable": "target_ret_1 (5m forward log return)",
+    "independent_variables": [
+      "aggressor_imbalance",
+      "signed_volume",
+      "buy_sell_ratio"
+    ],
+    "prediction_horizons": [
+      1,
+      3,
+      6
+    ],
+    "train_validation_policy": "Chronological Dev (60%) -> Validation (20%)",
+    "economic_hurdle_bps": 40.0,
+    "statistical_test": "Incremental R^2 and delta rank IC over Phase 9C volume features",
+    "multiple_testing_correction": "Benjamini-Hochberg FDR at alpha = 0.05",
+    "rejection_criteria": "Delta rank IC <= 0.01 or FDR q-value >= 0.05",
+    "support_criteria": "Delta rank IC > 0.02 with FDR q < 0.05 and positive net expectancy after dynamic friction",
+    "minimum_sample_requirement": 500,
+    "status": "REJECTED",
+    "registered_at": "2026-09-21T22:57:21.132969+00:00",
+    "evaluation_notes": "Trade flow imbalance has negligible forward predictability (IC=0.0000, p=1.000e+00)."
+  },
+  "P9D-H04": {
+    "hypothesis_id": "P9D-H04",
+    "name": "Microstructure x Regime Interaction",
+    "statement": "Microstructure order-book and trade-flow imbalance become significantly more informative under high-volatility and trending regime states.",
+    "mathematical_definition": "Interaction = Imbalance * HighVol_Dummy; test Beta(Interaction) in predicting Return_{t+h}",
+    "dependent_variable": "target_ret_1, target_dir_1",
+    "independent_variables": [
+      "imbalance_x_highvol",
+      "imbalance_x_trending",
+      "tfi_x_highvol"
+    ],
+    "prediction_horizons": [
+      1,
+      3
+    ],
+    "train_validation_policy": "Chronological Dev (60%) -> Validation (20%)",
+    "economic_hurdle_bps": 40.0,
+    "statistical_test": "Likelihood ratio test and interaction coefficient t-test across regime subsets",
+    "multiple_testing_correction": "Benjamini-Hochberg FDR at alpha = 0.05",
+    "rejection_criteria": "Interaction p-value >= 0.05 across all tested horizons",
+    "support_criteria": "Statistically significant interaction coefficient (q < 0.05) with higher IC in target regimes",
+    "minimum_sample_requirement": 300,
+    "status": "INCONCLUSIVE",
+    "registered_at": "2026-09-21T22:57:21.132969+00:00",
+    "evaluation_notes": "Regime interaction was not statistically significant across validation partitions."
+  },
+  "P9D-H05": {
+    "hypothesis_id": "P9D-H05",
+    "name": "Microstructure Incremental Information Content",
+    "statement": "Combining microstructure variables with Phase 9C causal features produces statistically significant incremental accuracy and net expectancy over Phase 9C features alone (Model B vs Baseline A).",
+    "mathematical_definition": "Delta_AUC = AUC(Model_B) - AUC(Baseline_A); Delta_Expectancy = Expectancy(Model_B) - Expectancy(Baseline_A)",
+    "dependent_variable": "target_dir_1 (5m forward direction), net_expectancy_bps",
+    "independent_variables": [
+      "Full Phase 9C Features + Microstructure Vector"
+    ],
+    "prediction_horizons": [
+      1,
+      3
+    ],
+    "train_validation_policy": "Chronological Dev (60%) -> Validation (20%) -> Frozen Holdout (20%)",
+    "economic_hurdle_bps": 40.0,
+    "statistical_test": "Block bootstrap CI of Delta_AUC and DeLong / permutation test for ROC comparison",
+    "multiple_testing_correction": "Holm-Bonferroni FWER at alpha = 0.05",
+    "rejection_criteria": "Delta_AUC <= 0 or 95% CI of Delta_AUC overlaps 0 or Delta_Expectancy <= 0 bps",
+    "support_criteria": "Delta_AUC > 0.015 (p < 0.05) and Delta_Net_Expectancy > 0 bps after dynamic friction",
+    "minimum_sample_requirement": 1000,
+    "status": "REJECTED",
+    "registered_at": "2026-09-21T22:57:21.132969+00:00",
+    "evaluation_notes": "Delta AUC=+0.0021 is not statistically significant."
+  }
+}
