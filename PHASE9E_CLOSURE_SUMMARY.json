@@ -1,0 +1,63 @@
+{
+  "research_scope": "Phases 1 through 9D comprehensive empirical research program",
+  "datasets": {
+    "BTCUSDT": {
+      "bars": 26000,
+      "span_days": 90.2743,
+      "calendar_days": 90.6493,
+      "source": "Binance.US REST API",
+      "resolution": "5m"
+    },
+    "ETHUSDT": {
+      "bars": 26000,
+      "span_days": 90.2743,
+      "calendar_days": 90.6493,
+      "source": "Binance.US REST API",
+      "resolution": "5m"
+    },
+    "SOLUSDT": {
+      "bars": 26000,
+      "span_days": 90.2743,
+      "calendar_days": 90.6493,
+      "source": "Binance.US REST API",
+      "resolution": "5m"
+    }
+  },
+  "assets": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ],
+  "sampling_frequency": "5m",
+  "hypotheses": [
+    "P9D-H01",
+    "P9D-H02",
+    "P9D-H03",
+    "P9D-H04",
+    "P9D-H05"
+  ],
+  "hypothesis_statuses": {
+    "P9D-H01": "PARTIALLY_SUPPORTED",
+    "P9D-H02": "SUPPORTED",
+    "P9D-H03": "PARTIALLY_SUPPORTED",
+    "P9D-H04": "INCONCLUSIVE",
+    "P9D-H05": "REJECTED"
+  },
+  "best_gross_edge_bps": 2.42,
+  "best_net_edge_bps": -35.79,
+  "average_dynamic_hurdle_bps": 38.21,
+  "holdout_gross_edge_bps": 2.11,
+  "holdout_net_edge_bps": -36.10,
+  "incremental_auc": 0.0025,
+  "incremental_auc_ci": [
+    -0.0094,
+    0.0142
+  ],
+  "incremental_auc_p_value": 0.690,
+  "abstention_net_edge_bps": -25.50,
+  "reproducibility_status": "FULLY_REPRODUCIBLE",
+  "test_status": "PASSING",
+  "safety_status": "VERIFIED",
+  "final_classification": "NOT_SUPPORTED",
+  "next_permitted_research_direction": "Passive execution modeling, limit order queue dynamics, or structural market-making at higher temporal frequencies (<1s) or longer macro horizons (>4h)"
+}

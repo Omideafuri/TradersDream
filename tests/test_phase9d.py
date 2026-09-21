@@ -159,9 +159,12 @@ def test_microstructure_aggregation_and_leakage_invariance(sample_candles):
     assert leak_check["max_delta"] < 1e-9
 
 
-def test_holdout_protection_and_freeze_protocol(sample_candles):
+def test_holdout_protection_and_freeze_protocol(tmp_path):
     """Tests that holdout protection raises error before freeze and unlocks only after freeze."""
-    protocol = Phase9DHoldoutProtocol()
+    protocol = Phase9DHoldoutProtocol(
+        freeze_manifest_path=tmp_path / "TEST_FREEZE.md",
+        freeze_json_path=tmp_path / "test_freeze.json",
+    )
 
     # Unauthorized access before freeze
     with pytest.raises(HoldoutProtectionError):
