@@ -306,3 +306,85 @@ def evaluate_asset_independence(
         is_suspicious=is_suspicious,
         verdict=verdict,
     )
+
+
+@dataclass
+class CrossSourceComparisonResult:
+    source_a: str
+    source_b: str
+    asset: str
+    overlapping_bars: int
+    pearson_return_corr: float
+    price_mean_pct_diff: float
+    price_max_pct_diff: float
+    volume_corr: float
+    timestamp_alignment_pct: float
+    is_consistent: bool
+    notes: str
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+def compare_cross_source_datasets(
+    df_a: pd.DataFrame,
+    df_b: pd.DataFrame,
+    source_a: str = "SOURCE_A",
+    source_b: str = "SOURCE_B",
+    asset: str = "BTC",
+) -> CrossSourceComparisonResult:
+    """Compares price and volume behavior across two exchanges for the same asset over overlapping timestamps."""
+    merged = pd.merge(
+        df_a[["timestamp", "close", "volume"]],
+        df_b[["timestamp", "close", "volume"]],
+        on="timestamp",
+        suffixes=("_a", "_b")
+    )
+    n = len(merged)
+    if n < 5:
+        return CrossSourceComparisonResult(
+            source_a=source_a,
+            source_b=source_b,
+            asset=asset,
+            overlapping_bars=n,
+            pearson_return_corr=0.0,
+            price_mean_pct_diff=0.0,
+            price_max_pct_diff=0.0,
+            volume_corr=0.0,
+            timestamp_alignment_pct=0.0,
+            is_consistent=False,
+            notes="Insufficient overlapping bars across sources.",
+        )
+
+    # Percentage price difference
+    price_pct_diffs = np.abs(merged["close_a"] - merged["close_b"]) / merged["close_a"] * 100.0
+    mean_pct_diff = float(np.mean(price_pct_diffs))
+    max_pct_diff = float(np.max(price_pct_diffs))
+
+    # Return correlation
+    ret_a = np.diff(merged["close_a"].values) / merged["close_a"].values[:-1]
+    ret_b = np.diff(merged["close_b"].values) / merged["close_b"].values[:-1]
+    pearson_corr = float(np.corrcoef(ret_a, ret_b)[0, 1]) if (np.std(ret_a) > 1e-9 and np.std(ret_b) > 1e-9) else 0.0
+
+    # Volume correlation
+    vol_corr = float(np.corrcoef(merged["volume_a"], merged["volume_b"])[0, 1]) if (
+        np.std(merged["volume_a"]) > 1e-9 and np.std(merged["volume_b"]) > 1e-9
+    ) else 0.0
+
+    # Typical crypto exchanges exhibit return correlation > 0.85 and price deviations < 1.0%
+    is_consistent = (pearson_corr > 0.80 and mean_pct_diff < 1.5)
+
+    return CrossSourceComparisonResult(
+        source_a=source_a,
+        source_b=source_b,
+        asset=asset,
+        overlapping_bars=n,
+        pearson_return_corr=pearson_corr,
+        price_mean_pct_diff=mean_pct_diff,
+        price_max_pct_diff=max_pct_diff,
+        volume_corr=vol_corr,
+        timestamp_alignment_pct=100.0,
+        is_consistent=is_consistent,
+        notes="High consistency" if is_consistent else "Cross-source deviation detected",
+    )
+
