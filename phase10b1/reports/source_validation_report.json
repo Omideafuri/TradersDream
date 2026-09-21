@@ -1,0 +1,60 @@
+{
+  "report_title": "Phase 10B.1 Source Validation and Qualification Report",
+  "audit_timestamp": "2026-09-22T03:20:00+00:00",
+  "phase": "10B.1",
+  "candidate_verification_states": {
+    "Tardis.dev": {
+      "documentation_verified": true,
+      "sample_verified": true,
+      "full_data_verified": false,
+      "verification_state": "SAMPLE_VERIFIED",
+      "qualification_verdict": "SOURCE QUALIFIED — PAID ACQUISITION REQUIRED",
+      "verified_capabilities": {
+        "tick_trades": true,
+        "incremental_l2_deltas": true,
+        "initial_snapshots": true,
+        "exchange_timestamps_microsecond": true,
+        "symbol_support_btcusdt": true,
+        "symbol_support_ethusdt": true,
+        "symbol_support_solusdt": true,
+        "continuity_30_days": true
+      },
+      "verified_limitations": {
+        "mbo_order_ids": false,
+        "queue_position": "ESTIMATED_QUEUE_AHEAD_ONLY"
+      }
+    },
+    "Kaiko": {
+      "documentation_verified": true,
+      "sample_verified": false,
+      "full_data_verified": false,
+      "verification_state": "DOCUMENTATION_VERIFIED",
+      "qualification_verdict": "NOT QUALIFIED — ENTERPRISE CONTRACT BARRIER"
+    },
+    "Binance Data Vision": {
+      "documentation_verified": true,
+      "sample_verified": false,
+      "full_data_verified": false,
+      "verification_state": "DOCUMENTATION_VERIFIED",
+      "qualification_verdict": "NOT QUALIFIED — L2 DELTAS ABSENT FROM SPOT ARCHIVE"
+    },
+    "Coinbase Native REST": {
+      "documentation_verified": true,
+      "sample_verified": false,
+      "full_data_verified": false,
+      "verification_state": "DOCUMENTATION_VERIFIED",
+      "qualification_verdict": "NOT QUALIFIED — NO HISTORICAL EVENT ARCHIVE"
+    },
+    "Databento": {
+      "documentation_verified": true,
+      "sample_verified": false,
+      "full_data_verified": false,
+      "verification_state": "DOCUMENTATION_VERIFIED",
+      "qualification_verdict": "PARTIALLY QUALIFIED — INCOMPLETE USDT CROSS-ASSET COVERAGE"
+    }
+  },
+  "best_qualifying_source": "Tardis.dev (Binance.US Spot / Coinbase Spot)",
+  "overall_decision": "SOURCE QUALIFIED — ACQUISITION POSSIBLE",
+  "acquisition_status": "PAID_ACQUISITION_REQUIRED",
+  "financial_authorization_status": "BLOCKED_PENDING_USER_APPROVAL"
+}

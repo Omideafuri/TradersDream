@@ -1,0 +1,323 @@
+{
+  "audit_phase": "10B.1",
+  "audit_timestamp": "2026-09-22T03:20:00+00:00",
+  "candidate_sources": [
+    {
+      "provider": "Tardis.dev",
+      "exchange": "Binance.US / Binance / Coinbase",
+      "instrument_type": "spot",
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "trade_data": {
+        "available": true,
+        "format": "trades CSV / NDJSON",
+        "fields": [
+          "exchange",
+          "symbol",
+          "timestamp",
+          "local_timestamp",
+          "id",
+          "side",
+          "price",
+          "amount"
+        ],
+        "aggressor_side_available": true
+      },
+      "l2_data": {
+        "available": true,
+        "format": "incremental_book_L2 CSV / NDJSON",
+        "fields": [
+          "exchange",
+          "symbol",
+          "timestamp",
+          "local_timestamp",
+          "is_snapshot",
+          "side",
+          "price",
+          "amount"
+        ],
+        "incremental_deltas": true,
+        "atomic_message_grouping": true
+      },
+      "snapshot_data": {
+        "available": true,
+        "embedded_in_stream": true,
+        "dedicated_snapshots": true,
+        "format": "book_snapshot_5 / book_snapshot_25 / is_snapshot=true"
+      },
+      "mbo_data": {
+        "available": false,
+        "notes": "Binance.US does not offer L3/MBO. Level-2 MBP aggregated depth only. Coinbase has L3 WebSocket channels (received, open, done, change) recorded in raw replays."
+      },
+      "timestamp": {
+        "exchange_timestamp": true,
+        "local_timestamp": true,
+        "resolution": "microsecond"
+      },
+      "sequence": {
+        "available": true,
+        "preserves_raw_order": true,
+        "atomic_batching": "local_timestamp grouping"
+      },
+      "historical_coverage": {
+        "BTCUSDT": "2019-09-25 to present",
+        "ETHUSDT": "2019-09-25 to present",
+        "SOLUSDT": "2020-09-18 to present",
+        "supports_30_consecutive_days": true
+      },
+      "provenance": {
+        "source_feed": "Exchange WebSocket stream (wss://stream.binance.us:9443/stream)",
+        "collector_location": "GCP europe-west2 (London) / AWS us-east-1 (N. Virginia)",
+        "incident_logging": true
+      },
+      "licensing": {
+        "academic_license": "Permits research and backtesting",
+        "commercial_license": "Permits proprietary quantitative modeling",
+        "redistribution": "Raw data redistribution prohibited; derived metrics allowed"
+      },
+      "pricing": {
+        "pricing_model": "Custom quote / monthly subscription",
+        "minimum_order": 300.0,
+        "estimated_monthly_cost_usd": "300 - 1000/month depending on tier",
+        "free_trial": "30-day trial API key available upon request"
+      },
+      "sample_verified": true,
+      "full_dataset_verified": false,
+      "qualification_status": "QUALIFIED_PAID_ACCESS_REQUIRED"
+    },
+    {
+      "provider": "Kaiko",
+      "exchange": "Binance / Coinbase / Kraken",
+      "instrument_type": "spot",
+      "symbols": [
+        "BTC-USDT",
+        "ETH-USDT",
+        "SOL-USDT"
+      ],
+      "trade_data": {
+        "available": true,
+        "format": "Tick-level trades JSON / CSV",
+        "fields": [
+          "timestamp",
+          "trade_id",
+          "price",
+          "amount",
+          "taker_side_sell"
+        ],
+        "aggressor_side_available": true
+      },
+      "l2_data": {
+        "available": true,
+        "format": "Level-2 order book snapshots and tick updates",
+        "fields": [
+          "timestamp",
+          "type",
+          "bids",
+          "asks"
+        ],
+        "incremental_deltas": true
+      },
+      "snapshot_data": {
+        "available": true,
+        "format": "Periodic depth snapshots"
+      },
+      "mbo_data": {
+        "available": false,
+        "notes": "L3 order book data available for select venues (Coinbase/Bitstamp), MBP on Binance"
+      },
+      "timestamp": {
+        "exchange_timestamp": true,
+        "local_timestamp": true,
+        "resolution": "millisecond / microsecond"
+      },
+      "sequence": {
+        "available": true,
+        "preserves_raw_order": true
+      },
+      "historical_coverage": {
+        "coverage_start": "2015 to present",
+        "supports_30_consecutive_days": true
+      },
+      "provenance": {
+        "source_feed": "Exchange direct market data feeds",
+        "normalization": "Standardized Kaiko symbology"
+      },
+      "licensing": {
+        "enterprise_only": true,
+        "academic_partnerships": "Available upon application"
+      },
+      "pricing": {
+        "pricing_model": "Annual enterprise contract",
+        "estimated_monthly_cost_usd": "1500 - 5000+/month",
+        "free_trial": "Sample data on request via enterprise sales"
+      },
+      "sample_verified": false,
+      "full_dataset_verified": false,
+      "qualification_status": "NOT_QUALIFIED_ENTERPRISE_BARRIER"
+    },
+    {
+      "provider": "Binance Data Vision (Official)",
+      "exchange": "Binance.com (Global)",
+      "instrument_type": "spot",
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "trade_data": {
+        "available": true,
+        "format": "Monthly and daily trades ZIP / CSV",
+        "fields": [
+          "trade_id",
+          "price",
+          "qty",
+          "quoteQty",
+          "time",
+          "isBuyerMaker",
+          "isBestMatch"
+        ],
+        "aggressor_side_available": true
+      },
+      "l2_data": {
+        "available": false,
+        "notes": "Binance Data Vision DOES NOT archive historical incremental L2 order-book deltas for spot markets."
+      },
+      "snapshot_data": {
+        "available": false,
+        "notes": "No historical spot depth snapshots archived on data.binance.vision"
+      },
+      "mbo_data": {
+        "available": false
+      },
+      "timestamp": {
+        "exchange_timestamp": true,
+        "resolution": "microsecond (since 2025) / millisecond"
+      },
+      "sequence": {
+        "available": false
+      },
+      "historical_coverage": {
+        "coverage_start": "2017 to present for trades",
+        "supports_30_consecutive_days": true
+      },
+      "provenance": {
+        "source_feed": "Binance matching engine internal trade logs",
+        "publicly_hosted": true
+      },
+      "licensing": {
+        "public_data": "Free public download for personal/research use"
+      },
+      "pricing": {
+        "pricing_model": "Free public archive",
+        "estimated_monthly_cost_usd": "0.00"
+      },
+      "sample_verified": false,
+      "full_dataset_verified": false,
+      "qualification_status": "NOT_QUALIFIED_MISSING_L2_DELTAS"
+    },
+    {
+      "provider": "Coinbase Exchange Native REST",
+      "exchange": "Coinbase Exchange",
+      "instrument_type": "spot",
+      "symbols": [
+        "BTC-USD",
+        "ETH-USD",
+        "SOL-USD"
+      ],
+      "trade_data": {
+        "available": false,
+        "notes": "REST endpoint /trades only serves latest 100 rolling trades. No historical archive."
+      },
+      "l2_data": {
+        "available": false,
+        "notes": "REST endpoint /book?level=2 returns current snapshot only. No historical delta replay."
+      },
+      "snapshot_data": {
+        "available": false,
+        "notes": "No historical snapshot archive"
+      },
+      "mbo_data": {
+        "available": false
+      },
+      "timestamp": {
+        "exchange_timestamp": true,
+        "resolution": "ISO 8601"
+      },
+      "sequence": {
+        "available": false
+      },
+      "historical_coverage": {
+        "supports_30_consecutive_days": false
+      },
+      "provenance": {
+        "source_feed": "Coinbase Exchange public REST"
+      },
+      "licensing": {
+        "public_api": "Free but strictly real-time"
+      },
+      "pricing": {
+        "pricing_model": "Free",
+        "estimated_monthly_cost_usd": "0.00"
+      },
+      "sample_verified": false,
+      "full_dataset_verified": false,
+      "qualification_status": "NOT_QUALIFIED_NO_HISTORICAL_ARCHIVE"
+    },
+    {
+      "provider": "Databento",
+      "exchange": "Coinbase (Evolving Crypto Coverage)",
+      "instrument_type": "spot",
+      "symbols": [
+        "BTC-USD",
+        "ETH-USD"
+      ],
+      "trade_data": {
+        "available": true,
+        "format": "MBP-10 / Trades DBN / Parquet / CSV",
+        "aggressor_side_available": true
+      },
+      "l2_data": {
+        "available": true,
+        "format": "MBP-10 (Market Depth Top 10 levels with trades and order counts)",
+        "incremental_deltas": true
+      },
+      "snapshot_data": {
+        "available": true,
+        "format": "MBP-10 periodic snapshots"
+      },
+      "mbo_data": {
+        "available": true,
+        "notes": "MBO format supported for venues providing order-level IDs (e.g., Coinbase L3 feed)"
+      },
+      "timestamp": {
+        "exchange_timestamp": true,
+        "local_timestamp": true,
+        "resolution": "nanosecond"
+      },
+      "sequence": {
+        "available": true,
+        "sequence_numbers": true
+      },
+      "historical_coverage": {
+        "coverage_start": "Recent coverage (varies by venue)",
+        "supports_30_consecutive_days": true
+      },
+      "provenance": {
+        "source_feed": "Direct raw market data capture from exchange matching engines"
+      },
+      "licensing": {
+        "terms": "Usage-based commercial & research license"
+      },
+      "pricing": {
+        "pricing_model": "Pay per GB downloaded",
+        "estimated_monthly_cost_usd": "Pay-as-you-go (~$0.05 - $0.20/GB); new accounts receive test credits"
+      },
+      "sample_verified": false,
+      "full_dataset_verified": false,
+      "qualification_status": "QUALIFIED_PARTIAL_PAID_ACCESS_REQUIRED"
+    }
+  ]
+}

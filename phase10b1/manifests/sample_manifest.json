@@ -1,0 +1,19 @@
+{
+  "provider": "Tardis.dev",
+  "exchange": "BINANCE_US",
+  "symbol": "BTCUSDT",
+  "instrument_type": "spot",
+  "event_type": "incremental_book_L2",
+  "coverage_start": "2024-03-01T00:00:00.000000Z",
+  "coverage_end": "2024-03-01T00:10:00.000000Z",
+  "event_count": 14250,
+  "raw_filename": "binance-us_incremental_book_L2_2024-03-01_BTCUSDT.csv.gz",
+  "file_size_bytes": 482910,
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_format": "CSV (exchange,symbol,timestamp,local_timestamp,is_snapshot,side,price,amount)",
+  "timestamp_resolution": "microsecond",
+  "sequence_identifier": "local_timestamp_atomic_grouping",
+  "snapshot_available": true,
+  "provenance": "Direct WebSocket capture from wss://stream.binance.us:9443/stream by Tardis GCP recorder",
+  "validation_status": "DOCUMENTATION_AND_SCHEMA_VERIFIED"
+}

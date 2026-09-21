@@ -1,0 +1,55 @@
+{
+  "phase": "10B.1",
+  "log_timestamp": "2026-09-22T03:20:00+00:00",
+  "acquisition_attempts": [
+    {
+      "provider": "Binance.US Official REST API",
+      "dataset": "depth / trades / historicalTrades",
+      "symbol": "BTCUSDT",
+      "date": "2026-09-22",
+      "download_attempt": "REST GET /api/v3/depth & /api/v3/historicalTrades",
+      "success_or_failure": "FAILURE_UNSUPPORTED",
+      "bytes": 0,
+      "sha256": null,
+      "coverage": "Current snapshot only (0 days historical L2)",
+      "notes": "Public REST endpoints do not provide historical incremental L2 delta logs. Historical trades require authenticated API key."
+    },
+    {
+      "provider": "Binance Data Vision (Official)",
+      "dataset": "monthly/trades & monthly/klines",
+      "symbol": "BTCUSDT",
+      "date": "2026-09-22",
+      "download_attempt": "Public HTTP Archive Query",
+      "success_or_failure": "FAILURE_INSUFFICIENT",
+      "bytes": 0,
+      "sha256": null,
+      "coverage": "Tick trades available; incremental L2 order book deltas completely absent",
+      "notes": "data.binance.vision does not archive historical spot order-book depth deltas."
+    },
+    {
+      "provider": "Coinbase Exchange Native REST",
+      "dataset": "products/{id}/book?level=2 & /trades",
+      "symbol": "BTC-USD",
+      "date": "2026-09-22",
+      "download_attempt": "REST GET /book?level=2",
+      "success_or_failure": "FAILURE_UNSUPPORTED",
+      "bytes": 0,
+      "sha256": null,
+      "coverage": "Current snapshot only (0 days historical L2)",
+      "notes": "No historical delta replay exists via public REST."
+    },
+    {
+      "provider": "Tardis.dev",
+      "dataset": "incremental_book_L2 & trades",
+      "symbol": "BTCUSDT / ETHUSDT / SOLUSDT",
+      "date": "2026-09-22",
+      "download_attempt": "API Metadata Discovery & Schema Verification",
+      "success_or_failure": "SUCCESS_DISCOVERY_BLOCKED_PURCHASE",
+      "bytes": 0,
+      "sha256": null,
+      "coverage": "Full 30-day coverage confirmed present from 2019/2020 to current",
+      "notes": "Source is fully qualified via documentation and API schema. Full historical acquisition requires paid subscription / trial API key (minimum order $300). Acquisition halted pending user authorization."
+    }
+  ],
+  "decision": "PAID_ACQUISITION_REQUIRED"
+}
