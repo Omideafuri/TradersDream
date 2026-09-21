@@ -1,0 +1,38 @@
+{
+  "report_timestamp": "2026-09-21T23:39:47.682868+00:00",
+  "phase": "10B",
+  "validation_scorecard": {
+    "tick_trades": "FAIL",
+    "incremental_l2": "FAIL",
+    "initial_snapshots": "FAIL",
+    "sequence_ids": "FAIL",
+    "timestamp_precision": "FAIL",
+    "trade_book_alignment": "FAIL",
+    "book_reconstruction": "FAIL",
+    "queue_information": "UNAVAILABLE",
+    "adverse_selection_markouts": "FAIL",
+    "historical_coverage": "FAIL",
+    "cross_asset_coverage": "FAIL",
+    "provenance": "PASS",
+    "reproducibility": "PASS"
+  },
+  "gap_analysis": {
+    "total_gaps": 0,
+    "gap_summary": "No historical event stream present; 100% missing data for 30-day L2/tick coverage requirement."
+  },
+  "sequence_integrity": "INSUFFICIENT_DATA",
+  "timestamp_integrity": "INSUFFICIENT_DATA",
+  "book_integrity": "INSUFFICIENT_DATA",
+  "trade_integrity": "INSUFFICIENT_DATA",
+  "coverage": "0 days (30 days required by Phase 10A)",
+  "provenance": "Documented in PHASE10B_EVENT_DATA_ACQUISITION_AND_VALIDATION.md",
+  "split_integrity": "NOT_PARTITIONED",
+  "sufficiency": "DATA INSUFFICIENT",
+  "phase10c_permission": "BLOCKED",
+  "missing_requirements": [
+    "Continuous 30-day historical incremental L2 order book deltas (bids/asks with sequence IDs)",
+    "Synchronized tick-by-tick trade executions with aggressor side classification",
+    "Periodic full depth snapshots for sequence gap recovery",
+    "Sub-millisecond exchange matching-engine timestamps"
+  ]
+}

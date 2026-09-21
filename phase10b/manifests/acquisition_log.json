@@ -1,0 +1,70 @@
+{
+  "audit_timestamp": "2026-09-21T23:39:47.681887+00:00",
+  "phase": "10B",
+  "candidate_sources": [
+    {
+      "exchange": "BINANCE_US",
+      "base_url": "https://api.binance.us/api/v3",
+      "probed_endpoints": [
+        "/depth",
+        "/trades",
+        "/historicalTrades",
+        "/klines"
+      ],
+      "status": "REACHABLE_PUBLIC_REST",
+      "historical_l2_deltas_available": false,
+      "historical_tick_trades_available": false,
+      "order_book_depth_format": "Current Snapshot Only (limit=1000)",
+      "queue_granularity": "L2_AGGREGATED_PRICE_LEVEL",
+      "verdict": "INSUFFICIENT_FOR_HISTORICAL_QUEUE_RECONSTRUCTION",
+      "notes": "Public REST API does not provide historical streaming incremental L2 depth updates."
+    },
+    {
+      "exchange": "COINBASE",
+      "base_url": "https://api.exchange.coinbase.com",
+      "probed_endpoints": [
+        "/products/{id}/book?level=2",
+        "/products/{id}/trades"
+      ],
+      "status": "REACHABLE_PUBLIC_REST",
+      "historical_l2_deltas_available": false,
+      "historical_tick_trades_available": false,
+      "order_book_depth_format": "Current Snapshot Only (level 2)",
+      "queue_granularity": "L2_AGGREGATED_PRICE_LEVEL",
+      "verdict": "INSUFFICIENT_FOR_HISTORICAL_QUEUE_RECONSTRUCTION",
+      "notes": "Historical L2 delta feeds not archived on public REST API."
+    },
+    {
+      "exchange": "KRAKEN",
+      "base_url": "https://api.kraken.com/0/public",
+      "probed_endpoints": [
+        "/Depth",
+        "/Trades"
+      ],
+      "status": "REACHABLE_PUBLIC_REST",
+      "historical_l2_deltas_available": false,
+      "historical_tick_trades_available": true,
+      "order_book_depth_format": "Current Snapshot Only (count=500)",
+      "queue_granularity": "L2_AGGREGATED_PRICE_LEVEL",
+      "verdict": "INSUFFICIENT_FOR_HISTORICAL_QUEUE_RECONSTRUCTION",
+      "notes": "Trades are paginated, but order-book deltas are strictly real-time WebSocket without public historical archive."
+    },
+    {
+      "exchange": "OKX",
+      "base_url": "https://www.okx.com/api/v5/market",
+      "probed_endpoints": [
+        "/books",
+        "/trades"
+      ],
+      "status": "REACHABLE_PUBLIC_REST",
+      "historical_l2_deltas_available": false,
+      "historical_tick_trades_available": false,
+      "order_book_depth_format": "Current Snapshot Only (depth=400)",
+      "queue_granularity": "L2_AGGREGATED_PRICE_LEVEL",
+      "verdict": "INSUFFICIENT_FOR_HISTORICAL_QUEUE_RECONSTRUCTION",
+      "notes": "Historical L2 delta archives require proprietary institutional market data agreements."
+    }
+  ],
+  "conclusion": "No public REST exchange endpoint provides 30-day historical incremental L2 order book deltas.",
+  "overall_status": "DATA_INSUFFICIENT"
+}

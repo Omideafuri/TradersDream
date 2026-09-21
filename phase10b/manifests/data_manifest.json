@@ -1,0 +1,32 @@
+{
+  "phase": "10B",
+  "dataset_id": "PHASE10B_EVENT_DATASET_AUDIT",
+  "source": "REPOSITORY_AUDIT_AND_EXCHANGE_DISCOVERY",
+  "exchange": "BINANCE_US_COINBASE_KRAKEN",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ],
+  "event_types": [
+    "TICK_TRADES",
+    "L2_DELTAS",
+    "L2_SNAPSHOTS"
+  ],
+  "coverage_start": "NONE_AVAILABLE",
+  "coverage_end": "NONE_AVAILABLE",
+  "event_count": 0,
+  "trade_count": 0,
+  "book_update_count": 0,
+  "snapshot_count": 0,
+  "sequence_gaps": 0,
+  "timestamp_anomalies": 0,
+  "duplicate_events": 0,
+  "raw_sha256": "NONE",
+  "normalized_sha256": "NONE",
+  "schema_version": "1.0.0",
+  "validation_status": "DATA_INSUFFICIENT",
+  "queue_capability": "UNAVAILABLE",
+  "holdout_status": "NOT_CREATED_DUE_TO_DATA_INSUFFICIENCY",
+  "created_at": "2026-09-21T23:39:47.681887+00:00"
+}
