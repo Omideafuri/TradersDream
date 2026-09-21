@@ -350,6 +350,26 @@ To run the Phase 7 temporal resolution evaluation:
 
 ---
 
+## Phase 8 — Research Closure & Independent Reproducibility Audit
+
+Phase 8 is the definitive scientific closure and reproducibility verification phase for the entire research system (Phases 1–7):
+
+- **Test Suite Status**: **117 / 117 tests passing** (including 13 comprehensive Phase 8 verification tests).
+- **Master Classification Verdict**: `NOT_SUPPORTED` (frozen and permanently preserved).
+- **Algorithmic Reproducibility**: Verified identically (`Run A == Run B` with max metric delta `0.00e+00`).
+- **Data Provenance Discovery**: Audit identified that `ETHUSDT_5m_candles.csv` and `SOLUSDT_5m_candles.csv` were generated during early testing by price-scaling the `BTCUSDT` series ($r > 0.9999$). Code execution across `generalization/` and `temporal/` is strictly isolated with zero memory/variable leakage.
+- **Horizon & 4h Audit**: Verified that the apparent gross edge at 4h ($+15.76\text{ bps}$) is economically insufficient to cover 30 bps round-trip friction (net $-14.24\text{ bps}$), underpowered ($28.6\%$ at 40 bps), and based on only 30 bars ($N_{eff}=28$). Formally classified as `WEAK_OBSERVATION_ONLY`.
+- **Causality & Holdout Invariants**: Confirmed 0 forward-looking leakage and SHA256-verified sealed holdout boundaries.
+- **Safety**: Verified `PAPER_TRADING_ONLY = true`, `leverage = 1.0x`, zero credentials in repo, and clean environment templates.
+- **Research Freeze**: Documented in [`RESEARCH_FREEZE.md`](RESEARCH_FREEZE.md) and backed by structured artifacts in `data/phase8_results/`.
+
+To run the independent Phase 8 verification pipeline:
+```bash
+.venv\Scripts\python -m phase8.run
+```
+
+---
+
 ## Structured Logging Format
 
 Every decision cycle emits a structured log entry:
