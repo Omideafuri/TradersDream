@@ -1,0 +1,47 @@
+{
+  "provider": "Tardis.dev",
+  "endpoint": "https://api.tardis.dev/v1",
+  "exchange": "binance-us",
+  "symbols": ["BTCUSDT", "ETHUSDT", "SOLUSDT"],
+  "datasets": ["trades", "incremental_book_L2"],
+  "evaluation_tier": {
+    "name": "30-Day Evaluation Trial",
+    "access_window_days": 14,
+    "historical_depth": "rolling 7-14 days",
+    "sample_data": "first-day-of-month complete archives for all months",
+    "cost_usd": 0.0,
+    "payment_method_required": false,
+    "automatic_renewal": false
+  },
+  "academic_program": {
+    "name": "Academic Research Grant / Discounted Tier",
+    "eligibility_requirements": [
+      "Accredited university or non-profit academic research institution",
+      "Official academic institutional email domain (.edu or institutional equivalent)",
+      "Non-commercial quantitative research scope",
+      "Explicit non-redistribution agreement for raw tick datasets",
+      "Mandatory citation and attribution in published academic findings"
+    ],
+    "pricing_structure": "Custom quote / academic discount upon verification (commercial minimum: $300.00 USD)"
+  },
+  "requested_coverage": {
+    "target_consecutive_days": 30,
+    "target_pairs": ["BTCUSDT", "ETHUSDT", "SOLUSDT"],
+    "target_window": "2024-03-01 to 2024-03-31",
+    "trial_gap_identified": "Evaluation trial provides 7-14 days rolling; continuous 30-day window requires formal academic grant approval or paid custom historical order ($300 minimum)."
+  },
+  "queue_granularity": "ESTIMATED_QUEUE_AHEAD_L2",
+  "financial_commitments_incurred_usd": 0.0,
+  "payment_credentials_entered": false,
+  "application_status": "PREPARED_PENDING_USER_AUTHORIZATION",
+  "submission_status": "NOT_SUBMITTED",
+  "safety_invariants": {
+    "paper_trading_only": true,
+    "use_live_jev": false,
+    "leverage": 1.0,
+    "live_orders": 0,
+    "wallet_connections": 0,
+    "private_keys": 0
+  },
+  "phase10c_readiness": "BLOCKED"
+}
