@@ -1,0 +1,46 @@
+{
+  "phase": "10B.3",
+  "phase_name": "Academic Data Access Application & Approval Gate",
+  "timestamp": "2026-09-22T04:30:00Z",
+  "provider": "Tardis.dev",
+  "provider_documentation_status": "VERIFIED",
+  "academic_access_status": "CONDITIONAL",
+  "research_eligibility_status": "REQUIRES_USER_INPUT",
+  "continuous_30day_data_status": "REQUIRES_APPROVAL_OR_SUBSCRIPTION",
+  "pricing_status": {
+    "commercial_minimum_order_300usd": "UNVERIFIED",
+    "subscription_structure": "Quarterly or yearly billing via Paddle for Academic tier",
+    "custom_one_off_exports": "Explicitly not offered by provider"
+  },
+  "free_evaluation_trial": {
+    "duration_days": 30,
+    "historical_data_range": "Randomly selected 7-14 days rolling",
+    "cost_usd": 0.0,
+    "satisfies_phase10a_protocol": false
+  },
+  "provenance_hash_audit": {
+    "sample_manifest_hash_investigated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "hash_type": "SHA-256 of empty byte string b''",
+    "physical_file_present": false,
+    "classification": "Structural schema placeholder from Phase 10B.1; not proof of physical data"
+  },
+  "target_venue": "binance-us",
+  "target_instruments": ["BTCUSDT", "ETHUSDT", "SOLUSDT"],
+  "requested_streams": ["trades", "incremental_book_L2"],
+  "queue_model": "L2 queue-ahead estimation (NOT exact FIFO)",
+  "financial_commitments_incurred_usd": 0.0,
+  "payment_credentials_entered": false,
+  "application_status": "READY_FOR_USER_REVIEW",
+  "external_submission": "NOT_PERFORMED",
+  "phase10b_validation_state": "BLOCKED_UNTIL_ACTUAL_DATA_PASSES",
+  "phase10c_readiness": "BLOCKED",
+  "safety_invariants": {
+    "paper_trading_only": true,
+    "use_live_jev": false,
+    "leverage": 1.0,
+    "live_orders": 0,
+    "wallet_connections": 0,
+    "private_keys": 0
+  },
+  "research_freeze_intact": true
+}
