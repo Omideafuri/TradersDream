@@ -77,6 +77,11 @@ class Phase9DPipeline:
         f_cross_dev = FeatureEngineer.compute_cross_asset_features(btc_dev, peer_dfs_dev, "BTCUSDT")
         base_features_dev = pd.concat([f_base_dev, f_cross_dev], axis=1)
 
+        # Feature extraction on validation partition.
+        # METHODOLOGICAL NOTE (Warmup Boundary): FeatureEngineer computes rolling windows (up to 288 bars)
+        # strictly within each partition without prepending historical warmup bars from the prior partition.
+        # This is an intentional, conservative design choice that ensures 100% boundary isolation with zero
+        # cross-partition leakage, at the cost of dropping the initial warmup bars.
         f_base_val = FeatureEngineer.compute_all_single_asset_features(btc_val)
         f_cross_val = FeatureEngineer.compute_cross_asset_features(btc_val, peer_dfs_val, "BTCUSDT")
         base_features_val = pd.concat([f_base_val, f_cross_val], axis=1)

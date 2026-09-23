@@ -13,10 +13,14 @@ import numpy as np
 class MarketDataFetcher:
     """Fetches public market candle data from cryptocurrency exchange public endpoints."""
 
-    BINANCE_KLINES_URL = "https://api.binance.com/api/v3/klines"
+    BINANCE_GLOBAL_KLINES_URL = "https://api.binance.com/api/v3/klines"
+    BINANCE_US_KLINES_URL = "https://api.binance.us/api/v3/klines"
+    BINANCE_KLINES_URL = BINANCE_US_KLINES_URL  # Default to US endpoint to prevent HTTP 451 geo-restrictions
 
-    def __init__(self, timeout_seconds: float = 10.0):
+    def __init__(self, timeout_seconds: float = 10.0, use_binance_us: bool = True):
         self.timeout_seconds = timeout_seconds
+        self.use_binance_us = use_binance_us
+        self.endpoint_url = self.BINANCE_US_KLINES_URL if use_binance_us else self.BINANCE_GLOBAL_KLINES_URL
 
     async def fetch_klines(
         self,
@@ -42,7 +46,7 @@ class MarketDataFetcher:
 
         # Use unauthenticated public request
         async with httpx.AsyncClient(timeout=self.timeout_seconds) as client:
-            response = await client.get(self.BINANCE_KLINES_URL, params=params)
+            response = await client.get(self.endpoint_url, params=params)
             response.raise_for_status()
             raw_candles = response.json()
 

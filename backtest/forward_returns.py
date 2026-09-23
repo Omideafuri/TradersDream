@@ -9,7 +9,7 @@ Calculates predictive returns over multiple fixed time horizons:
 
 Mathematical Formulas:
 - LONG Forward Return  = (future_price / entry_price) - 1.0
-- SHORT Forward Return = (entry_price / future_price) - 1.0
+- SHORT Forward Return = 1.0 - (future_price / entry_price)
 
 Strictly measures empirical performance without look-ahead bias during decision generation.
 """
@@ -61,7 +61,7 @@ def calculate_directional_return(action: str, entry_price: float, future_price: 
     
     Formula:
       LONG:  (future_price / entry_price) - 1.0
-      SHORT: (entry_price / future_price) - 1.0
+      SHORT: 1.0 - (future_price / entry_price)
       HOLD:  None
     """
     if entry_price <= 0 or future_price <= 0:
@@ -70,7 +70,7 @@ def calculate_directional_return(action: str, entry_price: float, future_price: 
     if action == "LONG":
         return (future_price / entry_price) - 1.0
     elif action == "SHORT":
-        return (entry_price / future_price) - 1.0
+        return 1.0 - (future_price / entry_price)
     return None
 
 

@@ -38,7 +38,9 @@ class MicrostructureAggregator:
         has_real_trades = trades_df is not None and not trades_df.empty
 
         if not has_real_ob and not has_real_trades:
-            # Vectorized causal aggregation path
+            # SCIENTIFIC CLASSIFICATION: OHLCV-DERIVED PROXIES — NOT AUTHENTIC EVENT-LEVEL MICROSTRUCTURE.
+            # In the absence of historical L2 depth and tick trades, this path generates synthetic
+            # microstructure proxies derived from 5-minute OHLCV candles (spread proxy, volume-based TFI).
             c = candles_df["close"].values
             h = candles_df["high"].values
             l = candles_df["low"].values

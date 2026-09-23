@@ -8,6 +8,7 @@ import numpy as np
 from phase10b.models import (
     TickTrade,
     L2Delta,
+    L2DeltaPacket,
     L2Snapshot,
     ReconstructedBookState,
     SequenceGapRecord,
@@ -168,6 +169,65 @@ class EventDataValidator:
 
             last_seq = d.sequence_id
             last_ts = d.exchange_timestamp_ms
+
+        is_valid = len(gaps) == 0 and len([i for i in issues if i.severity in (GapSeverity.CRITICAL, GapSeverity.FATAL)]) == 0
+        return is_valid, issues, gaps
+
+    @staticmethod
+    def validate_delta_packets(packets: List[L2DeltaPacket]) -> Tuple[bool, List[ValidationIssue], List[SequenceGapRecord]]:
+        """Validates order book delta packets for packet sequence continuity and intra-packet deltas."""
+        issues: List[ValidationIssue] = []
+        gaps: List[SequenceGapRecord] = []
+        last_seq = None
+        last_ts = None
+
+        for p in packets:
+            # 1. Packet Sequence Continuity
+            if last_seq is not None:
+                expected_seq = last_seq + 1
+                if p.first_update_id > expected_seq:
+                    gap_size = p.first_update_id - expected_seq
+                    gaps.append(SequenceGapRecord(
+                        symbol=p.symbol,
+                        exchange=p.exchange,
+                        expected_sequence=expected_seq,
+                        observed_sequence=p.first_update_id,
+                        gap_size=gap_size,
+                        timestamp_ms=p.exchange_timestamp_ms,
+                        severity=GapSeverity.FATAL,
+                        notes=f"Packet sequence discontinuity: expected {expected_seq}, got {p.first_update_id}",
+                    ))
+            last_seq = p.final_update_id
+
+            # 2. Timestamp Monotonicity
+            if last_ts is not None and p.exchange_timestamp_ms < last_ts:
+                issues.append(ValidationIssue(
+                    check_name="delta_packet_timestamp_out_of_order",
+                    symbol=p.symbol,
+                    timestamp_ms=p.exchange_timestamp_ms,
+                    description=f"Packet timestamp {p.exchange_timestamp_ms} < last {last_ts}",
+                    severity=GapSeverity.CRITICAL,
+                ))
+            last_ts = p.exchange_timestamp_ms
+
+            # 3. Intra-packet deltas validation
+            for d in p.deltas:
+                if d.price <= 0:
+                    issues.append(ValidationIssue(
+                        check_name="invalid_delta_price",
+                        symbol=d.symbol,
+                        timestamp_ms=d.exchange_timestamp_ms,
+                        description=f"Non-positive delta price: {d.price}",
+                        severity=GapSeverity.FATAL,
+                    ))
+                if d.quantity < 0:
+                    issues.append(ValidationIssue(
+                        check_name="invalid_delta_quantity",
+                        symbol=d.symbol,
+                        timestamp_ms=d.exchange_timestamp_ms,
+                        description=f"Negative delta quantity: {d.quantity}",
+                        severity=GapSeverity.FATAL,
+                    ))
 
         is_valid = len(gaps) == 0 and len([i for i in issues if i.severity in (GapSeverity.CRITICAL, GapSeverity.FATAL)]) == 0
         return is_valid, issues, gaps

@@ -49,6 +49,16 @@ class TickTrade:
         return cls(**data_copy)
 
 
+def ms_to_us(ms: int) -> int:
+    """Converts millisecond timestamp to microsecond timestamp."""
+    return ms * 1000
+
+
+def us_to_ms(us: int) -> int:
+    """Converts microsecond timestamp to millisecond timestamp (integer division)."""
+    return us // 1000
+
+
 @dataclass
 class L2Delta:
     """Incremental order-book update (add, modify, delete) at a price level."""
@@ -61,6 +71,14 @@ class L2Delta:
     quantity: float  # 0.0 indicates deletion of the price level
     local_receive_timestamp_ms: Optional[int] = None
 
+    @property
+    def exchange_timestamp_us(self) -> int:
+        return self.exchange_timestamp_ms * 1000
+
+    @property
+    def local_receive_timestamp_us(self) -> Optional[int]:
+        return self.local_receive_timestamp_ms * 1000 if self.local_receive_timestamp_ms is not None else None
+
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
         d["side"] = self.side.value
@@ -72,6 +90,37 @@ class L2Delta:
         if isinstance(data_copy.get("side"), str):
             data_copy["side"] = BookSide(data_copy["side"])
         return cls(**data_copy)
+
+
+@dataclass
+class L2DeltaPacket:
+    """Canonical representation of an exchange depth packet containing multiple price updates."""
+    symbol: str
+    exchange: str
+    exchange_timestamp_ms: int
+    first_update_id: int
+    final_update_id: int
+    deltas: List[L2Delta] = field(default_factory=list)
+    local_receive_timestamp_ms: Optional[int] = None
+
+    @property
+    def exchange_timestamp_us(self) -> int:
+        return self.exchange_timestamp_ms * 1000
+
+    @property
+    def local_receive_timestamp_us(self) -> Optional[int]:
+        return self.local_receive_timestamp_ms * 1000 if self.local_receive_timestamp_ms is not None else None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "symbol": self.symbol,
+            "exchange": self.exchange,
+            "exchange_timestamp_ms": self.exchange_timestamp_ms,
+            "first_update_id": self.first_update_id,
+            "final_update_id": self.final_update_id,
+            "deltas": [d.to_dict() for d in self.deltas],
+            "local_receive_timestamp_ms": self.local_receive_timestamp_ms,
+        }
 
 
 @dataclass

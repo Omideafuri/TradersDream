@@ -21,7 +21,7 @@ from typing import Optional, Dict, Any
 from bot.config import BotConfig, get_config
 from bot.market_data import MarketDataFetcher
 from bot.indicators import calculate_indicators, build_market_state
-from bot.decision import JevDecisionEngine, JevApiProvider, Action
+from bot.decision import JevDecisionEngine, JevApiProvider, RuleBasedJev, Action
 from bot.risk import RiskEngine
 from bot.paper_trader import PaperTradingEngine
 
@@ -37,18 +37,27 @@ logger = logging.getLogger("crypto_bot")
 class CryptoTradingBot:
     """Phase 1 Paper-Trading Cryptocurrency Bot."""
 
-    def __init__(self, config: Optional[BotConfig] = None):
+    def __init__(self, config: Optional[BotConfig] = None, allow_synthetic_fallback: bool = False):
         self.config = config or get_config()
+        self.allow_synthetic_fallback = allow_synthetic_fallback
         # Enforce global safety invariant
         self.config.validate_safety()
 
         self.market_data = MarketDataFetcher()
-        jev_provider = JevApiProvider(
-            api_key=self.config.jev_agent_key,
-            endpoint=self.config.jev_endpoint,
-            model=self.config.jev_model,
-            timeout_seconds=self.config.jev_timeout_seconds,
-        )
+
+        # Gate Jev decision provider strictly by use_live_jev
+        if self.config.use_live_jev:
+            logger.info("Initializing JevApiProvider (USE_LIVE_JEV=true).")
+            jev_provider = JevApiProvider(
+                api_key=self.config.jev_agent_key,
+                endpoint=self.config.jev_endpoint,
+                model=self.config.jev_model,
+                timeout_seconds=self.config.jev_timeout_seconds,
+            )
+        else:
+            logger.info("Operating in safe offline mode: RuleBasedJev provider active (USE_LIVE_JEV=false).")
+            jev_provider = RuleBasedJev()
+
         self.decision_engine = JevDecisionEngine(
             provider=jev_provider,
             timeout_seconds=self.config.jev_timeout_seconds,
@@ -70,12 +79,13 @@ class CryptoTradingBot:
         logger.info(
             f"Initialized Crypto Trading Bot (Phase 1). "
             f"Symbol: {self.config.symbol}, Interval: {self.config.candle_interval}, "
-            f"Paper Balance: ${self.config.initial_balance:,.2f}"
+            f"Paper Balance: ${self.config.initial_balance:,.2f}, "
+            f"Live Jev: {self.config.use_live_jev}"
         )
 
     async def step(self) -> Dict[str, Any]:
         """Executes a single market analysis and paper trading decision cycle."""
-        # 1. Fetch public klines
+        # 1. Fetch public klines (fail-closed unless explicitly in test synthetic mode)
         try:
             klines_df = await self.market_data.fetch_klines(
                 symbol=self.config.symbol,
@@ -83,10 +93,18 @@ class CryptoTradingBot:
                 limit=self.config.candle_limit,
             )
         except Exception as exc:
-            logger.warning(
-                f"Failed to fetch live market data ({exc}). Generating synthetic candles for resilience."
-            )
-            klines_df = self.market_data.generate_synthetic_klines(count=self.config.candle_limit)
+            if self.allow_synthetic_fallback:
+                logger.warning(
+                    f"[EXPLICIT_TEST_MODE] Market data fetch failed ({exc}). Generating synthetic candles."
+                )
+                klines_df = self.market_data.generate_synthetic_klines(count=self.config.candle_limit)
+            else:
+                logger.error(
+                    f"Market data fetch failed ({exc}). Failing closed (silent synthetic fallback prohibited)."
+                )
+                raise RuntimeError(
+                    f"Market data fetch failed: {exc}. Failing closed to prevent trading on unverified data."
+                )
 
         # 2. Calculate deterministic indicators & build MarketState
         enriched_df = calculate_indicators(klines_df)

@@ -15,5 +15,7 @@
   "sequence_identifier": "local_timestamp_atomic_grouping",
   "snapshot_available": true,
   "provenance": "Direct WebSocket capture from wss://stream.binance.us:9443/stream by Tardis GCP recorder",
-  "validation_status": "DOCUMENTATION_AND_SCHEMA_VERIFIED"
+  "validation_status": "DOCUMENTATION_AND_SCHEMA_VERIFIED",
+  "artifact_classification": "SCHEMA PLACEHOLDER — NOT DATA PROOF",
+  "sha256_note": "SHA-256 e3b0... represents an empty byte string placeholder; physical sample file was not acquired in Phase 10B.1"
 }

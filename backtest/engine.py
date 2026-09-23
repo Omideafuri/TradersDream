@@ -186,8 +186,8 @@ class BacktestEngine:
                     net_pnl = gross_pnl - position.entry_fee - exit_fee
                     total_slip = position.entry_slippage + exit_slippage
 
-                    # Capital return
-                    position_capital = position.entry_price_raw * position.quantity
+                    # Capital return: returns exact capital deployed at fill price
+                    position_capital = position.entry_price_fill * position.quantity
                     cash += (position_capital + gross_pnl - exit_fee)
                     day_realized_pnl += net_pnl
 
@@ -273,7 +273,7 @@ class BacktestEngine:
 
             # 4. Record Equity Snapshot
             if position is not None:
-                pos_cost = position.entry_price_raw * position.quantity
+                pos_cost = position.entry_price_fill * position.quantity
                 unrealized = position.unrealized_pnl(close_p)
                 equity = cash + pos_cost + unrealized
             else:
@@ -287,14 +287,19 @@ class BacktestEngine:
             last_p = float(candles.iloc[-1]["close"])
             if position.side == "LONG":
                 exit_fill = last_p * (1.0 - self.config.slippage_rate)
+                exit_slippage = (last_p - exit_fill) * position.quantity
                 gross_pnl = (exit_fill - position.entry_price_fill) * position.quantity
             else:
                 exit_fill = last_p * (1.0 + self.config.slippage_rate)
+                exit_slippage = (exit_fill - last_p) * position.quantity
                 gross_pnl = (position.entry_price_fill - exit_fill) * position.quantity
 
             exit_fee = exit_fill * position.quantity * self.config.fee_rate
             net_pnl = gross_pnl - position.entry_fee - exit_fee
-            cash += (position.entry_price_raw * position.quantity + gross_pnl - exit_fee)
+            total_slip = position.entry_slippage + exit_slippage
+            cash += (position.entry_price_fill * position.quantity + gross_pnl - exit_fee)
+            if equity_curve:
+                equity_curve[-1] = cash
             trades.append(
                 BacktestTrade(
                     trade_id=position.trade_id,
@@ -311,7 +316,7 @@ class BacktestEngine:
                     net_pnl=net_pnl,
                     entry_fee=position.entry_fee,
                     exit_fee=exit_fee,
-                    slippage_cost=position.entry_slippage,
+                    slippage_cost=total_slip,
                     exit_reason="END_OF_DATA",
                     holding_periods=position.holding_periods,
                 )

@@ -62,19 +62,24 @@ def test_long_return_formula():
 
 
 def test_short_return_formula():
-    """Verifies standard SHORT return formula: (entry_price / future_price) - 1."""
+    """Verifies mathematically correct SHORT return formula: 1.0 - (future_price / entry_price)."""
     entry = 50000.0
     future = 40000.0
-    expected = (50000.0 / 40000.0) - 1.0  # +25.0%
+    expected = 1.0 - (40000.0 / 50000.0)  # +20.0%
     actual = calculate_directional_return("SHORT", entry, future)
     assert pytest.approx(actual, rel=1e-5) == expected
-    assert pytest.approx(actual, rel=1e-5) == 0.25
+    assert pytest.approx(actual, rel=1e-5) == 0.20
 
     # Loss scenario: price goes up
     future_up = 60000.0
-    expected_loss = (50000.0 / 60000.0) - 1.0  # -16.67%
+    expected_loss = 1.0 - (60000.0 / 50000.0)  # -20.0%
     actual_loss = calculate_directional_return("SHORT", entry, future_up)
     assert pytest.approx(actual_loss, rel=1e-5) == expected_loss
+    assert pytest.approx(actual_loss, rel=1e-5) == -0.20
+
+    # Independent benchmark cases
+    assert pytest.approx(calculate_directional_return("SHORT", 100.0, 50.0), rel=1e-5) == 0.50
+    assert pytest.approx(calculate_directional_return("SHORT", 100.0, 200.0), rel=1e-5) == -1.00
 
 
 def test_forward_return_calculation():

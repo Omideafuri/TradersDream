@@ -5,6 +5,7 @@ from typing import Dict, List, Optional, Tuple
 from phase10b.models import (
     BookSide,
     L2Delta,
+    L2DeltaPacket,
     L2Snapshot,
     ReconstructedBookState,
     SequenceGapRecord,
@@ -87,7 +88,10 @@ class OrderBookReconstructor:
 
         # 1. Sequence Validation
         expected_seq = (self.last_sequence_id + 1) if self.last_sequence_id is not None else delta.sequence_id
-        if delta.sequence_id != expected_seq:
+        if self.last_sequence_id is not None and delta.sequence_id == self.last_sequence_id:
+            # Intra-packet price level update: shares sequence ID with current event packet
+            pass
+        elif delta.sequence_id != expected_seq:
             gap_size = delta.sequence_id - expected_seq
             gap_rec = SequenceGapRecord(
                 symbol=self.symbol,
@@ -183,3 +187,77 @@ class OrderBookReconstructor:
             ask_levels=sorted_asks[:top_n],
             is_crossed=is_crossed,
         )
+
+    def apply_delta_packet(self, packet: L2DeltaPacket) -> ReconstructedBookState:
+        """Applies an atomic packet of deltas spanning [first_update_id, final_update_id]."""
+        if not self.is_initialized:
+            raise OrderBookReconstructionError("Cannot apply delta packet before order book is initialized.")
+
+        if packet.symbol != self.symbol:
+            raise OrderBookReconstructionError(
+                f"Packet symbol '{packet.symbol}' does not match reconstructor symbol '{self.symbol}'"
+            )
+
+        # 1. Packet Sequence Validation
+        expected_seq = (self.last_sequence_id + 1) if self.last_sequence_id is not None else packet.first_update_id
+        if packet.first_update_id > expected_seq:
+            gap_size = packet.first_update_id - expected_seq
+            gap_rec = SequenceGapRecord(
+                symbol=self.symbol,
+                exchange=self.exchange,
+                expected_sequence=expected_seq,
+                observed_sequence=packet.first_update_id,
+                gap_size=gap_size,
+                timestamp_ms=packet.exchange_timestamp_ms,
+                severity=GapSeverity.FATAL,
+                notes=f"Packet sequence gap: expected {expected_seq}, got {packet.first_update_id}",
+            )
+            self.sequence_gaps.append(gap_rec)
+            if self.strict_mode:
+                raise OrderBookReconstructionError(
+                    f"Sequence gap detected: expected {expected_seq}, observed {packet.first_update_id} (gap: {gap_size})"
+                )
+
+        # 2. Timestamp Validation (Monotonicity)
+        if self.last_timestamp_ms is not None and packet.exchange_timestamp_ms < self.last_timestamp_ms:
+            issue = ValidationIssue(
+                check_name="timestamp_monotonicity",
+                symbol=self.symbol,
+                timestamp_ms=packet.exchange_timestamp_ms,
+                description=f"Out-of-order timestamp: current {packet.exchange_timestamp_ms} < last {self.last_timestamp_ms}",
+                severity=GapSeverity.CRITICAL,
+            )
+            self.validation_issues.append(issue)
+            if self.strict_mode:
+                raise OrderBookReconstructionError(issue.description)
+
+        # 3. Apply all deltas in the packet
+        for delta in packet.deltas:
+            if delta.price <= 0:
+                raise OrderBookReconstructionError(f"Non-positive price in delta: {delta.price}")
+            if delta.quantity < 0:
+                raise OrderBookReconstructionError(f"Negative quantity in delta: {delta.quantity}")
+
+            ladder = self._bids if delta.side == BookSide.BID else self._asks
+            if delta.quantity == 0.0:
+                ladder.pop(delta.price, None)
+            else:
+                ladder[delta.price] = delta.quantity
+
+        self.last_sequence_id = packet.final_update_id
+        self.last_timestamp_ms = packet.exchange_timestamp_ms
+
+        state = self.get_current_state()
+        if state.is_crossed:
+            issue = ValidationIssue(
+                check_name="crossed_book",
+                symbol=self.symbol,
+                timestamp_ms=packet.exchange_timestamp_ms,
+                description=f"Crossed book: best_bid {state.best_bid} >= best_ask {state.best_ask}",
+                severity=GapSeverity.CRITICAL,
+            )
+            self.validation_issues.append(issue)
+            if self.strict_mode:
+                raise OrderBookReconstructionError(issue.description)
+
+        return state

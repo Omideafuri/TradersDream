@@ -139,6 +139,8 @@ class RiskEngine:
         max_risk_dollars = portfolio_value * self.max_risk_per_trade
 
         # Stop loss distance calculation using ATR (fallback to 1.5% if ATR invalid)
+        # NOTE: In Phase 1 Paper Trader, this distance is used strictly for pre-trade risk-based
+        # position sizing. In the backtest engine, active stop-loss/take-profit orders are also monitored.
         stop_distance = atr14 * 1.5 if atr14 > 0 else current_price * 0.015
 
         # Risk-based notional: (max_risk_dollars / (stop_distance / current_price))

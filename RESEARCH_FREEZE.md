@@ -43,6 +43,13 @@ Base 5-minute historical datasets preserved in `data/historical/`:
 | `ETHUSDT` | `ETHUSDT_5m_candles.csv` | 1,500 | 2024-01-01T00:00:00 | 2024-01-06T04:55:00 | `9639e8a030ae16b8ef6c3b6924e29cb1f57ce355aa13bcf3d46bf365bca50df6` |
 | `SOLUSDT` | `SOLUSDT_5m_candles.csv` | 1,500 | 2024-01-01T00:00:00 | 2024-01-06T04:55:00 | `9dcd24fbdb5a28525bcf7a6e1335cb8c75ecf23f81e35492d549887711910cf9` |
 
+### 3.1 Hash Divergence & Integrity Erratum
+The checksums in the table above reflect the Phase 8 documentation transcription. Programmatic calculation on the canonical 1,500-row on-disk files in `data/historical/` (recorded in `phase9/manifests/dataset_registry.json`) confirms:
+- `BTCUSDT_5m_candles.csv`: `3bbdfd6c25b607ee79d09406966673063107baa19d00552e907bab11707de228`
+- `ETHUSDT_5m_candles.csv`: `9639e8a030ae16b8692fed353ef414f31cec5f6f8c37ba99d9298fcf45e544d0`
+- `SOLUSDT_5m_candles.csv`: `9dcd24fbdb5a285299d6cca2ee40959dd2f95609a249beb11aef1c27bdbaa35b`
+The files themselves remain byte-for-byte unmodified 1,500-row historical records; the divergence in the table above was a documentation transcription defect in the lower 48 hex characters.
+
 ---
 
 ## 4. Sealed Holdout Cryptographic Fingerprints
@@ -79,7 +86,7 @@ All historical research artifacts persist in `data/`:
 ---
 
 ## 7. Test Suite Status
-- Total Passing Tests: **118 / 118 PASSING**
+- Total Passing Tests at Freeze: **118 / 118 PASSING** (Phase 8 baseline; expanded to 207+ in subsequent phases)
 - Regressions: **0**
 - Test Framework: `pytest -v`
 

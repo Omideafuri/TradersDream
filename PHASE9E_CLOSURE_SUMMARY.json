@@ -37,9 +37,9 @@
     "P9D-H05"
   ],
   "hypothesis_statuses": {
-    "P9D-H01": "PARTIALLY_SUPPORTED",
-    "P9D-H02": "SUPPORTED",
-    "P9D-H03": "PARTIALLY_SUPPORTED",
+    "P9D-H01": "REJECTED",
+    "P9D-H02": "REJECTED",
+    "P9D-H03": "REJECTED",
     "P9D-H04": "INCONCLUSIVE",
     "P9D-H05": "REJECTED"
   },

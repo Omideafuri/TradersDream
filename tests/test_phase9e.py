@@ -59,7 +59,7 @@ def test_phase9e_closure_summary_schema_and_values():
     # Empirical values checks
     assert data["final_classification"] == "NOT_SUPPORTED"
     assert data["hypothesis_statuses"]["P9D-H05"] == "REJECTED"
-    assert data["hypothesis_statuses"]["P9D-H02"] == "SUPPORTED"
+    assert data["hypothesis_statuses"]["P9D-H02"] == "REJECTED"
     assert data["best_net_edge_bps"] < 0.0, "Net edge must reflect negative post-cost performance"
     assert data["holdout_net_edge_bps"] < 0.0, "Holdout net edge must reflect negative post-cost performance"
     assert data["incremental_auc_p_value"] > 0.05, "Incremental AUC must not be statistically significant"
