@@ -1,0 +1,2 @@
+simulations,median_cagr_pct,worst_drawdown_pct,p95_drawdown_pct,best_final_equity,worst_final_equity,prob_loss_initial_capital_pct,prob_dd_gt_20pct,prob_dd_gt_30pct
+10000,12.64,25.66,17.07,18134.88,18134.88,0.0,1.26,0.0

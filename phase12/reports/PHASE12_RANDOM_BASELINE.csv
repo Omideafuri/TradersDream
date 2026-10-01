@@ -1,0 +1,2 @@
+simulations,mean_net_pnl,median_net_pnl,std_net_pnl,p5_net_pnl,p25_net_pnl,p75_net_pnl,p95_net_pnl,mean_return_pct,median_return_pct,prob_beat_frozen_pct
+1000,8414.1,8231.89,2571.13,4542.48,6644.19,10027.35,12778.76,84.14,82.32,51.4

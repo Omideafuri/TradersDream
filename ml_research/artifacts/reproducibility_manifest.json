@@ -1,0 +1,96 @@
+{
+  "project": "XAU/USD ML RESEARCH TRACK — HISTORICAL WALK-FORWARD VALIDATION",
+  "generated_at": "2026-10-01T07:08:45Z",
+  "environment": {
+    "python_version": "3.12.13",
+    "scikit_learn_version": "1.9.1",
+    "pandas_version": "3.0.6",
+    "numpy_version": "2.5.3",
+    "scipy_version": "1.18.1",
+    "os": "Windows"
+  },
+  "dataset": {
+    "path": "phase11/data/processed/XAUUSD_1H_2021_2025.csv",
+    "sha256": "b17d067c93d441e35168f014a18461d7bb2005ce0dcebb1f11f41183caee3620",
+    "rows": 28796,
+    "warmup_rows": 209,
+    "time_range_utc": {
+      "start": "2021-01-03 23:00:00+00:00",
+      "end": "2025-12-31 21:00:00+00:00"
+    }
+  },
+  "features": {
+    "count": 24,
+    "names": [
+      "ret_1h", "ret_2h", "ret_4h", "ret_8h", "ret_12h", "ret_24h",
+      "dist_sma50", "dist_sma200", "sma50_diff_sma200", "sma50_ratio_sma200",
+      "sma50_slope", "sma200_slope", "sma_trend_regime",
+      "atr14_norm", "volatility_24h", "range_1h", "range_4h", "range_24h",
+      "rsi14", "breakout_dist_24h",
+      "vol_ratio_24h", "vol_change_1h",
+      "hour_sin", "hour_cos"
+    ]
+  },
+  "labels": {
+    "horizons_hours": [4, 12, 24],
+    "execution_lag": "Next-bar open (t+1 Open)",
+    "friction_model": {
+      "spread_bps_roundtrip": 4.0,
+      "slippage_bps_roundtrip": 4.0,
+      "commission_usd_per_oz_roundtrip": 0.04,
+      "annual_swap_financing_rate_pct": 3.5,
+      "rollover_utc_hour": 22,
+      "wednesday_triple_rollover": true
+    }
+  },
+  "partitions": {
+    "train": {
+      "years": [2021, 2022, 2023],
+      "bars_before_purge": 16748,
+      "bars_purged_24h": 25,
+      "effective_bars": 16723
+    },
+    "validation": {
+      "year": 2024,
+      "bars_before_purge": 5933,
+      "bars_purged_24h": 25,
+      "effective_bars": 5908
+    },
+    "holdout": {
+      "year": 2025,
+      "bars_before_purge": 5905,
+      "bars_purged_24h": 25,
+      "effective_bars": 5880
+    }
+  },
+  "model_hyperparameters": {
+    "random_seed": 42,
+    "models": {
+      "logistic_regression": {
+        "C": 1.0,
+        "max_iter": 1000,
+        "solver": "lbfgs"
+      },
+      "random_forest": {
+        "n_estimators": 100,
+        "max_depth": 5,
+        "min_samples_leaf": 50,
+        "random_state": 42
+      },
+      "hist_gradient_boosting": {
+        "max_iter": 100,
+        "max_depth": 4,
+        "min_samples_leaf": 50,
+        "random_state": 42
+      }
+    }
+  },
+  "key_findings_summary": {
+    "classification_auc_range": "0.4834 to 0.5462 across models and horizons",
+    "walk_forward_4fold_auc": [0.5009, 0.5184, 0.5172, 0.5343],
+    "walk_forward_4fold_ml_sharpe": [-1.47, 0.32, 0.76, 2.58],
+    "hybrid_strategy_5year_net_pnl_pct": -8.65,
+    "frozen_sma_strategy_5year_net_pnl_pct": 61.73,
+    "verdict": "PROMISING HISTORICAL SIGNAL — REQUIRES FURTHER OUT-OF-SAMPLE VALIDATION"
+  }
+}

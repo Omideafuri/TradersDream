@@ -1,0 +1,7 @@
+Scenario,Annual_Rate_Pct,Total_Swap_Days,Avg_Swap_Days_Per_Trade,Gross_PnL,Spread_Slippage_Cost,Total_Swap_Cost,Net_PnL,Net_Return_Pct,Profit_Factor,Sharpe_Ratio
+Zero Financing (0.0%),0.0,1038,12.4,8732.99,595.15,0.0,8137.87,81.38,2.25,0.91
+Low Institutional Financing (1.5%),1.5,1038,12.4,8481.76,582.76,503.92,7394.98,73.95,2.14,0.86
+Realistic Retail Financing (3.5%),3.5000000000000004,1038,12.4,8158.71,566.96,1141.18,6450.59,64.51,1.99,0.79
+High Retail Financing (5.0%),5.0,1038,12.4,7925.0,555.39,1594.33,5775.39,57.75,1.89,0.74
+Severe Adverse Financing (7.5%),7.5,1038,12.4,7551.41,536.81,2304.86,4709.83,47.1,1.73,0.64
+Extreme Financing (10.0%),10.0,1038,12.4,7196.64,519.03,2962.87,3714.76,37.15,1.57,0.55

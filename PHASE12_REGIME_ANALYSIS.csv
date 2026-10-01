@@ -1,0 +1,8 @@
+trade_count,final_equity,net_pnl,net_return_pct,win_rate_pct,profit_factor,max_drawdown_pct,sharpe_ratio,regime_type,regime_label
+20,10194.92,194.92,1.95,45.0,1.184,4.98,0.135,Calendar Year,2021
+17,11001.5,1001.5,10.02,41.18,1.515,7.79,0.294,Calendar Year,2022
+14,11861.94,1861.94,18.62,35.71,1.86,2.32,0.341,Calendar Year,2023
+18,13648.09,3648.09,36.48,44.44,2.359,3.53,0.603,Calendar Year,2024
+15,18134.88,8134.88,81.35,46.67,3.836,9.39,0.578,Calendar Year,2025
+42,13925.99,3925.99,39.26,50.0,2.895,6.93,1.002,Volatility Regime,Low Vol (ATR <= 4.79)
+42,18134.88,8134.88,81.35,35.71,1.965,9.39,0.475,Volatility Regime,High Vol (ATR > 4.79)

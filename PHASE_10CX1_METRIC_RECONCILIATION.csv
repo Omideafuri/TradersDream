@@ -1,0 +1,9 @@
+metric,phase_10cx_30d_holdout,cdd_2year_binance
+Zero Friction PnL ($),-341.94,16.15
+Base Case Net PnL ($),-864.60,-9153.37
+Base Case Win Rate (%),26.64%,19.98%
+Base Case Profit Factor,0.29,0.25
+Base Case Total Trades,274,7247
+Base Case Max Drawdown (%),8.93%,91.54%
+Mathematical Break-Even Friction,< 3.20 bps,-7.29 bps
+Accounting Reconciliation,EXACT (0.00),EXACT (0.001175)

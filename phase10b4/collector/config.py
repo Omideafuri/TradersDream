@@ -21,8 +21,17 @@ class CollectorConfig:
     reconnect_backoff_seconds: float = 2.0
     buffer_flush_size: int = 5000
     enable_gzip_compression: bool = True
-    
-    # Financial and safety invariants
+    raw_output_dir: Path = field(default_factory=lambda: Path("data/raw_collected_events"))
+    checkpoint_dir: Path = field(default_factory=lambda: Path("data/checkpoints"))
+    min_disk_free_bytes: int = 2 * 1024 * 1024 * 1024  # 2 GB minimum free disk space threshold
+    watchdog_timeout_seconds: float = 60.0  # Max seconds without messages before flagging silent failure
+    ws_ping_interval: float = 20.0  # WebSocket ping frequency
+    ws_ping_timeout: float = 10.0  # WebSocket ping response deadline
+    collector_version: str = "v10c.1"
+    schema_version: str = "1.0.0"
+
+    # Absolute safety & data integrity invariants
+    allow_synthetic_fallback: bool = False  # NEVER substitute synthetic/simulated data on failure
     cost_usd: float = 0.0
     requires_api_key: bool = False
     requires_payment: bool = False

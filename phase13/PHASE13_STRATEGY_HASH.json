@@ -1,0 +1,24 @@
+{
+  "timestamp_utc": "2026-10-01T02:57:34.388704+00:00",
+  "strategy_id": "XAUUSD_FROZEN_SMA50_200_1H",
+  "strategy_lock": {
+    "PHASE12_STRATEGY_LOCK.json": "72ec09151c7c25bded64abcc5b853cc0f2169c19b3619a920d03e2ae0840df4e",
+    "phase13/config/phase13_forward_config.json": "47e5ec73e142e71ce7f7035d794a7a3cb1f52c3ad6cd6dee421f3c2c03c086ac"
+  },
+  "execution_engine_version": {
+    "phase13/engine/execution_simulator.py": "9271cf78aeb692663546bf36a91ed607e734eb54d1e948db85290eaad9f7cc66",
+    "phase13/engine/state_manager.py": "17029440b3a5a3e3d46573377fc1076046313b9ab04ebbaa926ab0f7d104d5b4",
+    "phase13/engine/integrity_monitor.py": "664fb98f5779a7001395ce00258a4fc2303bb84c245b9d76d0d2a8b4d18349be",
+    "phase13/engine/forward_monitor.py": "8b750a35463d325a50262487485d09488561b4ba4546969a3a8a21bcb0cd49ed",
+    "phase13/engine/runner.py": "3414936259dc24d9e72d394c5e33ac3a672b5cd351af126a833f8c31bfb77b3c"
+  },
+  "files": {
+    "PHASE12_STRATEGY_LOCK.json": "72ec09151c7c25bded64abcc5b853cc0f2169c19b3619a920d03e2ae0840df4e",
+    "phase13/config/phase13_forward_config.json": "47e5ec73e142e71ce7f7035d794a7a3cb1f52c3ad6cd6dee421f3c2c03c086ac",
+    "phase13/engine/execution_simulator.py": "9271cf78aeb692663546bf36a91ed607e734eb54d1e948db85290eaad9f7cc66",
+    "phase13/engine/state_manager.py": "17029440b3a5a3e3d46573377fc1076046313b9ab04ebbaa926ab0f7d104d5b4",
+    "phase13/engine/integrity_monitor.py": "664fb98f5779a7001395ce00258a4fc2303bb84c245b9d76d0d2a8b4d18349be",
+    "phase13/engine/forward_monitor.py": "8b750a35463d325a50262487485d09488561b4ba4546969a3a8a21bcb0cd49ed",
+    "phase13/engine/runner.py": "3414936259dc24d9e72d394c5e33ac3a672b5cd351af126a833f8c31bfb77b3c"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "strategy_id": "XAUUSD_FROZEN_SMA50_200_1H",
+  "phase": "PHASE13",
+  "environment": "PAPER_TRADING_ONLY",
+  "instrument": "XAU/USD",
+  "timeframe": "1H",
+  "fast_sma": 50,
+  "slow_sma": 200,
+  "atr_period": 14,
+  "direction": "LONG_ONLY",
+  "leverage": 1.0,
+  "execution_timing": "NEXT_BAR_OPEN",
+  "compounding": true,
+  "safety_invariants": {
+    "paper_trading_only": true,
+    "live_orders_permitted": 0,
+    "wallet_connections": 0,
+    "private_keys": 0,
+    "leverage_limit": 1.0
+  },
+  "data_feed": {
+    "primary_source_name": "Gold-API Spot XAU/USD",
+    "primary_endpoint": "https://api.gold-api.com/price/XAU",
+    "poll_interval_seconds": 60,
+    "candle_interval_minutes": 60,
+    "timezone": "UTC"
+  },
+  "execution_costs": {
+    "modeled_spread_bps": 4.0,
+    "modeled_slippage_bps": 1.0,
+    "commission_usd_per_oz": 0.02,
+    "annual_swap_rate": 0.035,
+    "swap_cut_hour_utc": 22,
+    "wednesday_triple_swap": true
+  },
+  "initial_capital_usd": 10000.0,
+  "historical_warmup_file": "phase11/data/processed/XAUUSD_1H_2021_2025.csv"
+}

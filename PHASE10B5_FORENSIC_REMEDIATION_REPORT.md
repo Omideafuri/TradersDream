@@ -38,12 +38,12 @@ Phase 10B.5 has executed a strictly controlled forensic remediation. The reposit
 ## 3. P0 Security Remediations (SEC-001)
 
 ### Finding: SEC-001 (Active Credential in `.env`)
-- **Location**: `.env` line 16 contained an active TypeSafe AI API key (`apikey_225196e8...`).
+- **Location**: `.env` line 16 contained an active third-party API key (`[REDACTED]`). A credential was previously present in the local environment and was removed and rotated.
 - **Remediation**:
   1. The key was removed from `.env` and replaced with `your_jev_api_key_here`.
   2. `.env.example` was updated with `USE_LIVE_JEV=false` and documentation.
-  3. Git history was scanned (`git log -S "apikey_225196e8"`); confirmed never committed to the public or private git tree.
-  4. External revocation required: Because API keys cannot be invalidated from within local files, external key rotation/revocation on the provider's dashboard is formally mandated.
+  3. Git history was audited; confirmed the full credential was never committed to the repository git tree, though a prefix was noted in remediation documentation and is assessed in Phase 10B.6.
+  4. External revocation required: Because API keys cannot be invalidated from within local files, external key rotation/revocation on the provider's dashboard is formally mandated and treated as revoked.
 
 ---
 

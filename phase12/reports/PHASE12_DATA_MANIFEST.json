@@ -1,0 +1,82 @@
+{
+  "description": "Phase 12 Forensic Data Manifest for XAU/USD Historical Datasets",
+  "instrument": "XAU/USD",
+  "raw_files": {
+    "DAT_MT_XAUUSD_M1_2021.csv": {
+      "path": "phase11/data/raw/DAT_MT_XAUUSD_M1_2021.csv",
+      "size_bytes": 23680882,
+      "sha256": "e02c49ae7499f5ed699d885dfbe5150727a0a431638e7ddc3a10b71d2c5359cb",
+      "rows": 353446,
+      "first_timestamp_est": "2021-01-03 18:00:00",
+      "last_timestamp_est": "2021-12-31 16:58:00",
+      "first_timestamp_utc": "2021-01-03 23:00:00",
+      "last_timestamp_utc": "2021-12-31 21:58:00",
+      "ohlc_valid": true,
+      "price_jumps_gt_5pct": 0
+    },
+    "DAT_MT_XAUUSD_M1_2022.csv": {
+      "path": "phase11/data/raw/DAT_MT_XAUUSD_M1_2022.csv",
+      "size_bytes": 23760076,
+      "sha256": "569cb0fbec2ee30059f8fba10951a24c358c058e85c51856762e07bdd592da49",
+      "rows": 354628,
+      "first_timestamp_est": "2022-01-02 18:00:00",
+      "last_timestamp_est": "2022-12-30 16:57:00",
+      "first_timestamp_utc": "2022-01-02 23:00:00",
+      "last_timestamp_utc": "2022-12-30 21:57:00",
+      "ohlc_valid": true,
+      "price_jumps_gt_5pct": 0
+    },
+    "DAT_MT_XAUUSD_M1_2023.csv": {
+      "path": "phase11/data/raw/DAT_MT_XAUUSD_M1_2023.csv",
+      "size_bytes": 20690404,
+      "sha256": "edb837ffecd22c6a9aea6c15c509f673a52f41f8ef5852fc495ee0340b0ad865",
+      "rows": 308812,
+      "first_timestamp_est": "2023-01-02 18:00:00",
+      "last_timestamp_est": "2023-12-29 16:57:00",
+      "first_timestamp_utc": "2023-01-02 23:00:00",
+      "last_timestamp_utc": "2023-12-29 21:57:00",
+      "ohlc_valid": true,
+      "price_jumps_gt_5pct": 0
+    },
+    "DAT_MT_XAUUSD_M1_2024.csv": {
+      "path": "phase11/data/raw/DAT_MT_XAUUSD_M1_2024.csv",
+      "size_bytes": 23828684,
+      "sha256": "0e9487ddd2d279175c5ea1b1dd45e21ccbe72454bd622339473bfbcd5839493a",
+      "rows": 355652,
+      "first_timestamp_est": "2024-01-01 18:00:00",
+      "last_timestamp_est": "2024-12-31 16:57:00",
+      "first_timestamp_utc": "2024-01-01 23:00:00",
+      "last_timestamp_utc": "2024-12-31 21:57:00",
+      "ohlc_valid": true,
+      "price_jumps_gt_5pct": 0
+    },
+    "DAT_MT_XAUUSD_M1_2025.csv": {
+      "path": "phase11/data/raw/DAT_MT_XAUUSD_M1_2025.csv",
+      "size_bytes": 23718737,
+      "sha256": "ea93f456b0e9d982a5b43bf2e3c158766dbba4664f11700d55160a960162a3e4",
+      "rows": 354011,
+      "first_timestamp_est": "2025-01-01 18:00:00",
+      "last_timestamp_est": "2025-12-31 16:57:00",
+      "first_timestamp_utc": "2025-01-01 23:00:00",
+      "last_timestamp_utc": "2025-12-31 21:57:00",
+      "ohlc_valid": true,
+      "price_jumps_gt_5pct": 0
+    }
+  },
+  "processed_files": {
+    "XAUUSD_1H_2021_2025.csv": {
+      "path": "phase11/data/processed/XAUUSD_1H_2021_2025.csv",
+      "size_bytes": 2274323,
+      "sha256": "b17d067c93d441e35168f014a18461d7bb2005ce0dcebb1f11f41183caee3620",
+      "rows": 28796,
+      "first_dt_utc": "2021-01-03 23:00:00+00:00",
+      "last_dt_utc": "2025-12-31 21:00:00+00:00"
+    }
+  },
+  "summary": {
+    "total_raw_rows": 1726549,
+    "duplicate_rows": 300,
+    "deduplicated_rows": 1726249,
+    "timestamp_monotonic": true
+  }
+}

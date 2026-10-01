@@ -1,0 +1,46 @@
+{
+  "strategy_name": "v10c.x-frozen-baseline",
+  "git_commit": "9e720c54bf856976e001c3d3257a20cc9514f754",
+  "frozen_parameters": {
+    "initial_balance": 10000.0,
+    "max_position_size": 0.1,
+    "max_open_positions": 1,
+    "stop_loss_pct": 0.015,
+    "take_profit_pct": 0.03,
+    "max_holding_bars": 24,
+    "ema_fast": 20,
+    "ema_medium": 50,
+    "ema_slow": 200,
+    "rsi_period": 14,
+    "rsi_upper_thresh": 70.0,
+    "rsi_lower_thresh": 30.0,
+    "volume_ratio_thresh": 1.0
+  },
+  "scenarios": {
+    "optimistic": {
+      "fee_rate": 0.0002,
+      "slippage_rate": 0.0001,
+      "latency_ms": 10.0,
+      "adverse_selection_bps": 0.0
+    },
+    "base": {
+      "fee_rate": 0.001,
+      "slippage_rate": 0.0005,
+      "latency_ms": 50.0,
+      "adverse_selection_bps": 1.0
+    },
+    "conservative": {
+      "fee_rate": 0.001,
+      "slippage_rate": 0.001,
+      "latency_ms": 100.0,
+      "adverse_selection_bps": 2.0
+    }
+  },
+  "zero_friction": {
+    "fee_rate": 0.0,
+    "slippage_rate": 0.0,
+    "latency_ms": 0.0,
+    "adverse_selection_bps": 0.0
+  },
+  "lock_status": "ACTIVE & IMMUTABLE"
+}

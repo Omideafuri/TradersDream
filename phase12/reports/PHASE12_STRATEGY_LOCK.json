@@ -1,0 +1,15 @@
+{
+  "strategy_id": "XAUUSD_FROZEN_SMA50_200_1H",
+  "phase": "PHASE12",
+  "strategy_modification_allowed": false,
+  "parameter_optimization_allowed": false,
+  "holdout_tuning_allowed": false,
+  "leverage": 1.0,
+  "direction": "LONG_ONLY",
+  "timeframe": "1H",
+  "execution": "NEXT_BAR_OPEN",
+  "fast_sma": 50,
+  "slow_sma": 200,
+  "atr_period": 14,
+  "compounding": true
+}

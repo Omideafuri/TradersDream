@@ -1,0 +1,28 @@
+{
+  "manifest_version": "1.0",
+  "created_utc": "2026-09-30T04:09:17.240026+00:00",
+  "source": "CryptoDataDownload",
+  "exchange": "Binance Spot",
+  "symbol": "BTCUSDT",
+  "granularity": "1m",
+  "files": [
+    {
+      "filename": "Binance_BTCUSDT_2023_minute.csv",
+      "source_url": "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_2023_minute.csv",
+      "download_timestamp_utc": "2026-09-30T04:09:09.073829+00:00",
+      "file_size_bytes": 55575196,
+      "sha256": "0d60d40c4eb6caf1f6c88c733b349e2fffe4b9b02628d69d6f78248cdf4f3b86",
+      "http_status": 200,
+      "download_time_sec": 19.1
+    },
+    {
+      "filename": "Binance_BTCUSDT_2024_minute.csv",
+      "source_url": "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_2024_minute.csv",
+      "download_timestamp_utc": "2026-09-30T04:09:17.240026+00:00",
+      "file_size_bytes": 60617495,
+      "sha256": "92339659cff4357dae8847b28c5a4269bbfe4b9c1b876b79847a7df3e407af72",
+      "http_status": 200,
+      "download_time_sec": 8.14
+    }
+  ]
+}

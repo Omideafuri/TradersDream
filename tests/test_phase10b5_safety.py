@@ -44,7 +44,7 @@ def test_safety_use_live_jev_defaults_to_false(monkeypatch):
 def test_safety_presence_of_key_does_not_enable_live_jev(monkeypatch):
     """Test that presence of JEV_AGENT_KEY alone NEVER enables live mode."""
     monkeypatch.setenv("USE_LIVE_JEV", "false")
-    monkeypatch.setenv("JEV_AGENT_KEY", "apikey_real_looking_secret_key_12345")
+    monkeypatch.setenv("JEV_AGENT_KEY", "mock_dummy_test_key_12345")
     cfg = BotConfig.from_env()
     assert cfg.use_live_jev is False
     bot = CryptoTradingBot(cfg)

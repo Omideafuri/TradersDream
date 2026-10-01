@@ -1,0 +1,6 @@
+trade_count,final_equity,net_pnl,net_return_pct,win_rate_pct,profit_factor,max_drawdown_pct,sharpe_ratio,scenario,description,mean_spread_bps
+84,18134.88,8134.88,81.35,42.86,2.248,9.39,0.907,A,Constant 6 bps RT,6.0
+84,18190.27,8190.27,81.9,44.05,2.257,9.41,0.912,B,Normal Session Variability (4/8/15 bps),6.8
+84,16953.68,6953.68,69.54,41.67,2.032,9.98,0.813,C,Wide-Spread Stress (10/20/35 bps),16.5
+84,15521.49,5521.49,55.21,40.48,1.789,10.72,0.69,D,Extreme News Stress (15/40/60 bps),28.0
+84,18167.59,8167.59,81.68,42.86,2.251,9.38,0.91,E,Randomized Log-Normal Spread,6.2

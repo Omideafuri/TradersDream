@@ -1,0 +1,22 @@
+{
+  "status": "QUALIFIED / NOT VALIDATED",
+  "zero_friction": {
+    "pnl": 16.15,
+    "return_pct": 0.0016,
+    "trades": 7237,
+    "win_rate": 0.4564,
+    "profit_factor": 1.0
+  },
+  "base_case": {
+    "pnl": -9153.37,
+    "return_pct": -0.9153,
+    "trades": 7247,
+    "win_rate": 0.1998,
+    "profit_factor": 0.25,
+    "sharpe": -29.37,
+    "max_dd": 0.9154
+  },
+  "break_even_bps": -7.29,
+  "leakage_audit_pass": true,
+  "accounting_reconciled": true
+}

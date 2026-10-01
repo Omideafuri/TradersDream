@@ -1,0 +1,34 @@
+{
+  "source": "CryptoDataDownload",
+  "exchange": "Binance Spot",
+  "symbol": "BTCUSDT",
+  "granularity": "1-minute -> aggregated 5-minute",
+  "download_timestamp_utc": "2026-09-30T04:17:16.779088+00:00",
+  "files": [
+    {
+      "filename": "Binance_BTCUSDT_2023_minute.csv",
+      "source_url": "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_2023_minute.csv",
+      "sha256": "0d60d40c4eb6caf1f6c88c733b349e2fffe4b9b02628d69d6f78248cdf4f3b86",
+      "size_bytes": 55575196,
+      "rows": 525517,
+      "coverage_start_utc": "2023-01-01T00:00:00+00:00",
+      "coverage_end_utc": "2023-12-31T23:59:00+00:00"
+    },
+    {
+      "filename": "Binance_BTCUSDT_2024_minute.csv",
+      "source_url": "https://www.cryptodatadownload.com/cdd/Binance_BTCUSDT_2024_minute.csv",
+      "sha256": "92339659cff4357dae8847b28c5a4269bbfe4b9c1b876b79847a7df3e407af72",
+      "size_bytes": 60617495,
+      "rows": 571339,
+      "coverage_start_utc": "2024-01-01T00:00:00+00:00",
+      "coverage_end_utc": "2025-01-31T23:59:00+00:00"
+    }
+  ],
+  "processed_file": {
+    "filename": "BINANCE_BTCUSDT_5m_FROM_CDD.csv",
+    "sha256": "d770f98099c872be465ef7889af501a2f55603bf56bb5f23a524f76b5d2836df",
+    "bars": 219378,
+    "coverage_start_utc": "2023-01-01T00:00:00+00:00",
+    "coverage_end_utc": "2025-01-31T23:55:00+00:00"
+  }
+}
